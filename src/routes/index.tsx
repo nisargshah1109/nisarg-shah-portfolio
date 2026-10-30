@@ -42,7 +42,19 @@ export const Route = createFileRoute("/")({
           "Computer Science Engineering student at KPGU Vadodara building AI/ML, document question-answering systems, and responsive web applications.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://nisarg-shah-portfolio-opal.vercel.app/" },
+      { property: "og:image", content: "https://nisarg-shah-portfolio-opal.vercel.app/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Nisarg Shah | Computer Science & AI/ML Portfolio" },
+      {
+        name: "twitter:description",
+        content:
+          "Computer Science Engineering student at KPGU Vadodara building AI/ML, document question-answering systems, and responsive web applications.",
+      },
+      { name: "twitter:image", content: "https://nisarg-shah-portfolio-opal.vercel.app/og-image.png" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://nisarg-shah-portfolio-opal.vercel.app/" },
     ],
   }),
   component: Index,

@@ -1,8 +1,17 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts, type ErrorComponentProps } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  HeadContent,
+  Scripts,
+  type ErrorComponentProps,
+} from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { structuredData, siteUrl, siteImage } from "../lib/structured-data";
 
 function NotFoundComponent() {
   return (
@@ -12,7 +21,10 @@ function NotFoundComponent() {
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">The page you're looking for doesn't exist or has been moved.</p>
         <div className="mt-6">
-          <Link to="/" className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-subtle transition-all hover:brightness-105">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-subtle transition-all hover:brightness-105"
+          >
             Go home
           </Link>
         </div>
@@ -62,10 +74,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#ffffff" },
       { name: "author", content: "Nisarg Pranitbhai Shah" },
+      {
+        name: "robots",
+        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Nisarg Shah Portfolio" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:url", content: `${siteUrl}/` },
+      { property: "og:image", content: siteImage },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Nisarg Shah - Computer Science & AI/ML Portfolio" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: siteImage },
+      { name: "twitter:image:alt", content: "Nisarg Shah - Computer Science & AI/ML Portfolio" },
     ],
     links: [
+      { rel: "canonical", href: `${siteUrl}/` },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -82,11 +108,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
+export function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/15 selection:text-primary">
         {children}
